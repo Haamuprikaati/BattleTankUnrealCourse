@@ -75,10 +75,11 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& 
 
 bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& OutHitLocation) const
 {
-	//DebugTest
+	/*DebugTest
 	const static FName TraceTag = TEXT("TraceTag");
 	GetWorld()->DebugDrawTraceTag = TraceTag;
 	FCollisionQueryParams Params(TraceTag);
+	*/
 
 	FHitResult HitResult;
 	auto StartLocation = PlayerCameraManager->GetCameraLocation();
@@ -87,8 +88,9 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 		HitResult,
 		StartLocation,
 		EndLocation,
-		ECollisionChannel::ECC_Visibility,
-		Params)
+		ECollisionChannel::ECC_Visibility
+		//,Params //DebugTest
+		)
 		)
 		{
 			OutHitLocation = HitResult.Location;
