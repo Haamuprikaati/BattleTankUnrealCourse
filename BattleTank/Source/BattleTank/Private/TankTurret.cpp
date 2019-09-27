@@ -2,6 +2,7 @@
 
 
 #include "TankTurret.h"
+#include "Engine/World.h"
 
 void UTankTurret::Turn(float RelativeSpeed)
 {
