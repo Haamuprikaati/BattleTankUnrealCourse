@@ -11,6 +11,12 @@ void UTankMovementComponent::Initialise(UTankTrack* LeftTrackToSet, UTankTrack* 
 	RightTrack = RightTrackToSet;
 }
 
+void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
+{
+	//No need to call Super as we're replacing the functionality
+	UE_LOG(LogTemp, Warning, TEXT("%s velocity: %s"), *GetOwner()->GetName(), *MoveVelocity.ToString())
+}
+
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
 	//UE_LOG(LogTemp, Warning, TEXT("Intend move forward throw: %f"), Throw)
