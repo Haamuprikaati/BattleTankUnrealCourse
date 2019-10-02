@@ -4,6 +4,7 @@
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
+#include "Projectile.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values for this component's properties
@@ -77,7 +78,7 @@ void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
 
 void UTankAimingComponent::Fire()
 {
-	if (!ensure(Barrel)) { return; }
+	if (!ensure(Barrel && ProjectileBlueprint)) { return; }
 	bool bIsReloaded = (GetWorld()->GetTimeSeconds() - LastFireTime > ReloadTimeInSeconds);
 	if (bIsReloaded)
 	{
