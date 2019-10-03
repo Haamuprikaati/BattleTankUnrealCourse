@@ -41,6 +41,11 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 	}
 }
 
+EFiringState UTankAimingComponent::GetFiringState() const
+{
+	return FiringState;
+}
+
 bool UTankAimingComponent::bIsBarrelMoving()
 {
 	if (!ensure(Barrel)) { return false; }
@@ -79,7 +84,7 @@ void UTankAimingComponent::AimAt(FVector OutHitLocation)
 	{
 		AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
-		MoveTurretTowards(AimDirection);
+		//MoveTurretTowards(AimDirection);
 	}
 	//if no solution found do nothing
 
@@ -94,17 +99,18 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 
+	//Always Yaw the shortest way
 	Barrel->Elevate(DeltaRotator.Pitch);
+	Turret->Turn(DeltaRotator.GetNormalized().Yaw);
+	
 }
 
-void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
+void UTankAimingComponent::MoveTurretTowards(FVector AimDirection) //UNNECESSARY as MoveBarrelTowards already does this!
 {
 	// Work-out difference between current turret rotation and aim direction
 	auto TurretRotator = Turret->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - TurretRotator;
-
-	Turret->Turn(DeltaRotator.GetNormalized().Yaw);
 }
 
 void UTankAimingComponent::Fire()
