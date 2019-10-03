@@ -27,17 +27,24 @@ void UTankAimingComponent::BeginPlay()
 
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
-	if(GetWorld()->GetTimeSeconds() - LastFireTime < ReloadTimeInSeconds)
+	if (Ammo > 0)
 	{
-		FiringState = EFiringState::Reloading;
-	}
-	else if (bIsBarrelMoving())
-	{
-		FiringState = EFiringState::Aiming;
+		if (GetWorld()->GetTimeSeconds() - LastFireTime < ReloadTimeInSeconds)
+		{
+			FiringState = EFiringState::Reloading;
+		}
+		else if (bIsBarrelMoving())
+		{
+			FiringState = EFiringState::Aiming;
+		}
+		else
+		{
+			FiringState = EFiringState::Locked;
+		}
 	}
 	else
 	{
-		FiringState = EFiringState::Locked;
+		FiringState = EFiringState::OutOfAmmo;
 	}
 }
 
@@ -115,8 +122,10 @@ void UTankAimingComponent::MoveTurretTowards(FVector AimDirection) //UNNECESSARY
 
 void UTankAimingComponent::Fire()
 {
-	if (FiringState != EFiringState::Reloading)
+	
+	if (FiringState == EFiringState::Locked || FiringState == EFiringState::Aiming)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("FIRING"))
 		//Spawn a projectile at the socket location
 		if (!ensure(Barrel)) { return; }
 		if (!ensure(ProjectileBlueprint)) { return; }
@@ -128,6 +137,7 @@ void UTankAimingComponent::Fire()
 
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = GetWorld()->GetTimeSeconds();
+		Ammo = Ammo - 1;
 
 		//UE_LOG(LogTemp, Warning, TEXT("%s firing"), *this->GetName());
 		
