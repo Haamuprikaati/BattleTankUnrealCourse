@@ -7,6 +7,9 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Projectile.generated.h"
 
+class UStaticMeshComponent;
+class UParticleSystemComponent;
+
 UCLASS()
 class BATTLETANK_API AProjectile : public AActor
 {
@@ -26,9 +29,14 @@ public:
 
 	void LaunchProjectile(float Speed);
 
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
+		UStaticMeshComponent* CollisionMesh = nullptr;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
+		UParticleSystemComponent* LaunchBlast = nullptr;
+
+
 private:
 
 	UProjectileMovementComponent* ProjectileMovement = nullptr;
-
-
 };
