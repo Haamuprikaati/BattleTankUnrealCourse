@@ -35,8 +35,14 @@ public:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
 		UParticleSystemComponent* LaunchBlast = nullptr;
 
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
+		UParticleSystemComponent* ImpactBlast = nullptr;
+
 
 private:
+
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 
 	UProjectileMovementComponent* ProjectileMovement = nullptr;
 };
