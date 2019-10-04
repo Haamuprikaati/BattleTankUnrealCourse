@@ -5,10 +5,12 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "PhysicsEngine/RadialForceComponent.h"
 #include "Projectile.generated.h"
 
 class UStaticMeshComponent;
 class UParticleSystemComponent;
+class URadialForceComponent;
 
 UCLASS()
 class BATTLETANK_API AProjectile : public AActor
@@ -38,6 +40,9 @@ public:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
 		UParticleSystemComponent* ImpactBlast = nullptr;
 
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
+		URadialForceComponent* ExplosionForce = nullptr;
+
 
 private:
 
@@ -45,4 +50,5 @@ private:
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 
 	UProjectileMovementComponent* ProjectileMovement = nullptr;
+
 };
