@@ -5,6 +5,7 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "PhysicsEngine/RadialForceComponent.h"
+#include "TimerManager.h"
 #include "Components/StaticMeshComponent.h"
 
 // Sets default values
@@ -55,7 +56,17 @@ void AProjectile::OnHit(UPrimitiveComponent* HitActor, AActor* OtherActor, UPrim
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
 	ExplosionForce->FireImpulse();
-	UE_LOG(LogTemp, Warning, TEXT("BOOM"))
+	SetRootComponent(ImpactBlast);
+	CollisionMesh->DestroyComponent();
+
+	FTimerHandle Timer;
+	GetWorld()->GetTimerManager().SetTimer(Timer, this, &AProjectile::OnTimerExpired, DestroyDelay, false);
+	
+}
+
+void AProjectile::OnTimerExpired()
+{
+	Destroy();
 }
 
 void AProjectile::LaunchProjectile(float Speed)

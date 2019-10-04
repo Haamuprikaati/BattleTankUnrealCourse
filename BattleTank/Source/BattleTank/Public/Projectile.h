@@ -43,12 +43,16 @@ public:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
 		URadialForceComponent* ExplosionForce = nullptr;
 
-
 private:
 
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 
 	UProjectileMovementComponent* ProjectileMovement = nullptr;
+
+	void OnTimerExpired();
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		float DestroyDelay = 10;
 
 };
