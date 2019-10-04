@@ -50,6 +50,9 @@ private:
 
 	UProjectileMovementComponent* ProjectileMovement = nullptr;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		float ProjectileDamage;
+
 	void OnTimerExpired();
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
