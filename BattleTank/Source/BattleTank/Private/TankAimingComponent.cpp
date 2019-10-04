@@ -142,7 +142,6 @@ void UTankAimingComponent::Fire()
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = GetWorld()->GetTimeSeconds();
 		RoundsLeft--;
-		UE_LOG(LogTemp, Warning, TEXT("FIRING"))
 
 		//UE_LOG(LogTemp, Warning, TEXT("%s firing"), *this->GetName());
 		

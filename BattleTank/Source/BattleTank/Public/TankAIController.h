@@ -23,6 +23,9 @@ protected:
 
 private:
 
+	UFUNCTION()
+	void OnPossessedTankDeath();
+
 	virtual void BeginPlay() override;
 
 	virtual void SetPawn(APawn* InPawn) override;
