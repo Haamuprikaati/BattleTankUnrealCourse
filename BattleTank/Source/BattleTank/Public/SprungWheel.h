@@ -23,7 +23,7 @@ public:
 	UStaticMeshComponent* Wheel = nullptr;
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
-	UPhysicsConstraintComponent* Suspension = nullptr;
+	UPhysicsConstraintComponent* MassWheelConstraint = nullptr;
 
 protected:
 	// Called when the game starts or when spawned
