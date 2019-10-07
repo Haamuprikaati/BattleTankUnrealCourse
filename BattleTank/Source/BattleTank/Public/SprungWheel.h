@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "PhysicsEngine/PhysicsConstraintComponent.h"
+#include "Components/SphereComponent.h"
 #include "SprungWheel.generated.h"
 
 UCLASS()
@@ -17,10 +18,16 @@ public:
 	ASprungWheel();
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
-	UStaticMeshComponent* Wheel = nullptr;
+		USphereComponent* Wheel = nullptr;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
+		USphereComponent* Axle = nullptr;
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
 	UPhysicsConstraintComponent* MassWheelConstraint = nullptr;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
+		UPhysicsConstraintComponent* AxleWheelConstraint = nullptr;
 
 protected:
 	// Called when the game starts or when spawned
@@ -32,5 +39,6 @@ public:
 
 private:
 	void SetupConstraints();
+
 
 };
