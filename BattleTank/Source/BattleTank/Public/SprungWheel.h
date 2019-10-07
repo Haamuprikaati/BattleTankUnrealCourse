@@ -42,5 +42,10 @@ public:
 private:
 	void SetupConstraints();
 
+	void ApplyForce();
 
+	float TotalForceMagnitudeThisFrame = 0;
+
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 };
