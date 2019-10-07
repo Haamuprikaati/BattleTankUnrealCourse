@@ -2,6 +2,7 @@
 
 
 #include "SpawnPoint.h"
+#include "Kismet/GameplayStatics.h"
 #include "Engine/World.h"
 
 // Sets default values for this component's properties
@@ -19,11 +20,14 @@ USpawnPoint::USpawnPoint()
 void USpawnPoint::BeginPlay()
 {
 	Super::BeginPlay();
-
-	auto NewActor = GetWorld()->SpawnActor<AActor>(SpawnClass);
-	if (!NewActor) { return; }
-	NewActor->AttachToComponent(this, FAttachmentTransformRules::KeepRelativeTransform);
 	
+	auto NewActor = GetWorld()->SpawnActorDeferred<AActor>(SpawnClass, GetComponentTransform());
+	if (!ensure(NewActor)) { return; }
+	NewActor->AttachToComponent(this, FAttachmentTransformRules::KeepWorldTransform);
+	UGameplayStatics::FinishSpawningActor(NewActor, GetComponentTransform());
+
+	auto Paikka = GetComponentTransform().ToString();
+	UE_LOG(LogTemp, Warning, TEXT("Paikka: %s"), *Paikka)
 }
 
 

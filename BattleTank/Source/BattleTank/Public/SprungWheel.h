@@ -17,9 +17,6 @@ public:
 	ASprungWheel();
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
-	UStaticMeshComponent* Mass = nullptr;
-
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
 	UStaticMeshComponent* Wheel = nullptr;
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
@@ -32,5 +29,8 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+private:
+	void SetupConstraints();
 
 };

@@ -3,6 +3,7 @@
 
 #include "SprungWheel.h"
 #include "Components/StaticMeshComponent.h"
+#include "PhysicsEngine/PhysicsConstraintComponent.h"
 
 // Sets default values
 ASprungWheel::ASprungWheel()
@@ -12,10 +13,6 @@ ASprungWheel::ASprungWheel()
 
 	MassWheelConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("MassWheelConstraint"));
 	SetRootComponent(MassWheelConstraint);
-	
-	Mass = CreateDefaultSubobject<UStaticMeshComponent>(FName("Mass"));
-	Mass->SetupAttachment(MassWheelConstraint);
-	Mass->SetNotifyRigidBodyCollision(true);
 
 	Wheel = CreateDefaultSubobject<UStaticMeshComponent>(FName("Wheel"));
 	Wheel->SetNotifyRigidBodyCollision(true);
@@ -28,14 +25,7 @@ void ASprungWheel::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	if (GetAttachParentActor())
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Not Null"))
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Null"))
-	}
+	SetupConstraints();
 }
 
 // Called every frame
@@ -43,5 +33,13 @@ void ASprungWheel::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void ASprungWheel::SetupConstraints()
+{
+	if (!GetAttachParentActor()) { return; }
+	UPrimitiveComponent* BodyRoot = Cast<UPrimitiveComponent>(GetAttachParentActor()->GetRootComponent());
+	if (!BodyRoot) { return; }
+	MassWheelConstraint->SetConstrainedComponents(BodyRoot, NAME_None, Wheel, NAME_None);
 }
 
