@@ -50,3 +50,8 @@ void ASprungWheel::SetupConstraints()
 	UE_LOG(LogTemp, Warning, TEXT("%s"), *BodyRoot->GetName())
 }
 
+void ASprungWheel::AddDrivingForce(float ForceMagnitude)
+{
+	Wheel->AddForce(Axle->GetForwardVector() * ForceMagnitude);
+}
+
